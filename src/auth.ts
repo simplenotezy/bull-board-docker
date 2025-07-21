@@ -1,42 +1,33 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import { Router, Request, Response } from "express";
+import { Router } from "express";
 import config from "./config";
 
-interface User {
-	user: string;
-}
-
-const authRouter: Router = Router();
+const authRouter = Router();
 
 passport.use(
-	new LocalStrategy(function (
-		username: string,
-		password: string,
-		cb: (error: any, user?: User | false) => void
-	) {
+	new LocalStrategy((username, password, cb) => {
 		if (
 			username === config.USER_LOGIN &&
 			password === config.USER_PASSWORD
 		) {
 			return cb(null, { user: "bull-board" });
 		}
-
 		return cb(null, false);
 	})
 );
 
-passport.serializeUser((user: any, cb: (error: any, id?: any) => void) => {
+passport.serializeUser((user: any, cb) => {
 	cb(null, user);
 });
 
-passport.deserializeUser((user: any, cb: (error: any, user?: any) => void) => {
+passport.deserializeUser((user: any, cb) => {
 	cb(null, user);
 });
 
 authRouter
 	.route("/")
-	.get((_req: Request, res: Response) => {
+	.get((_req, res) => {
 		res.render("login");
 	})
 	.post(
@@ -47,4 +38,3 @@ authRouter
 	);
 
 export { authRouter };
-
