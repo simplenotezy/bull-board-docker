@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "ts-node src/index.ts --respawn src/index.ts",
+    "dev": "nodemon --watch src --watch .env --ext ts,js --exec ts-node src/index.ts",
     "test": "vitest",
     "test:run": "vitest run",
     "test:ui": "vitest --ui"
@@ -33,6 +33,7 @@
     "@types/passport-local": "^1.0.35",
     "dotenv": "^14.3.2",
     "morgan": "^1.10.1",
+    "nodemon": "^3.1.0",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3",
