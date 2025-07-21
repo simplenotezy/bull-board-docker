@@ -40,9 +40,13 @@ export async function setupQueues(
 	setQueues: (queues: BaseAdapter[]) => void
 ): Promise<void> {
 	try {
+		console.log("Connecting to Redis");
 		if (!redisClient.isOpen) {
 			await redisClient.connect();
 		}
+		console.log("Connected to Redis");
+
+		console.log("Fetching Redis keys");
 		const keys = await redisClient.keys(`${config.BULL_PREFIX}:*`);
 		const uniqueKeys = new Set(
 			keys.map((key) => key.replace(/^.+?:(.+?):.+?$/, "$1"))
@@ -50,9 +54,14 @@ export async function setupQueues(
 
 		const queues = Array.from(uniqueKeys).sort().map(createQueue);
 		setQueues(queues);
-		console.log("done!");
+		console.log("Setup queues done!");
 	} catch (err) {
 		console.error("Error fetching Redis keys:", err);
 	}
+}
+
+// Export function to get Redis client for graceful shutdown
+export function getRedisClient() {
+	return redisClient;
 }
 
