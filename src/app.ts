@@ -9,22 +9,28 @@ import path from "path";
 import config from "./config";
 import { authRouter } from "./auth";
 
+const bullBoardOptions = config.getBullBoardOptions();
+
 const serverAdapter = new ExpressAdapter();
 serverAdapter.setBasePath(config.PROXY_PATH);
 
-const { setQueues, replaceQueues, addQueue, removeQueue } = createBullBoard({
+if (Object.keys(bullBoardOptions).length > 0) {
+	console.log(
+		"Bull Board Options:",
+		JSON.stringify(bullBoardOptions, null, 2)
+	);
+}
+
+const { setQueues } = createBullBoard({
 	queues: [],
 	serverAdapter,
 	options: config.getBullBoardOptions(),
 });
 
 // Set UI config if provided
-const bullBoardOptions = config.getBullBoardOptions();
 if (bullBoardOptions.uiConfig) {
 	serverAdapter.setUIConfig(bullBoardOptions.uiConfig);
 }
-
-console.log(JSON.stringify(bullBoardOptions, null, 2));
 
 const app = express();
 
