@@ -1,6 +1,6 @@
 import { createBullBoard } from "@bull-board/api";
 import { ExpressAdapter } from "@bull-board/express";
-import express from "express";
+import express, { Express } from "express";
 import session from "express-session";
 import passport from "passport";
 import bodyParser from "body-parser";
@@ -32,7 +32,7 @@ if (bullBoardOptions.uiConfig) {
 	serverAdapter.setUIConfig(bullBoardOptions.uiConfig);
 }
 
-const app = express();
+const app: Express = express();
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");

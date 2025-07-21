@@ -1,9 +1,9 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import { Router } from "express";
+import { Router, IRouter } from "express";
 import config from "./config";
 
-const authRouter = Router();
+const authRouter: IRouter = Router();
 
 passport.use(
 	new LocalStrategy((username, password, cb) => {
@@ -38,3 +38,4 @@ authRouter
 	);
 
 export { authRouter };
+
