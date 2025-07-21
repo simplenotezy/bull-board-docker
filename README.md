@@ -1,6 +1,34 @@
+# Bull Board Docker
+
 Docker image for [bull-board]. Allow you to monitor your bull queue without any coding!
 
 Supports both: bull and bullmq. bull-board version v3.2.6
+
+**Now with TypeScript support and pnpm package management!**
+
+## Development
+
+This project has been converted to TypeScript with the following features:
+
+-   **TypeScript**: Full type safety and modern JavaScript features
+-   **pnpm**: Fast, disk space efficient package manager
+-   **Development scripts**: Hot reloading and type checking
+
+### Development Commands
+
+```bash
+# Install dependencies
+pnpm install
+
+# Development with hot reload
+pnpm dev
+
+# Build for production
+pnpm build
+
+# Start production build
+pnpm start
+```
 
 ### Quick start with Docker
 

@@ -1,10 +1,12 @@
 {
   "name": "bullboard",
   "version": "2.0.3",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node ."
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts --respawn src/index.ts"
   },
   "dependencies": {
     "@bull-board/api": "^6.10.1",
@@ -19,7 +21,19 @@
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "redis": "^3.1.2"
+    "redis": "^5.6.0"
+  },
+  "devDependencies": {
+    "@types/bull": "^3.15.7",
+    "@types/express": "^4.17.17",
+    "@types/express-session": "^1.17.7",
+    "@types/morgan": "^1.9.4",
+    "@types/node": "^20.5.0",
+    "@types/passport": "^1.0.12",
+    "@types/passport-local": "^1.0.35",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.1.6"
   }
 }
 
