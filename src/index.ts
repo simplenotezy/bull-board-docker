@@ -26,6 +26,16 @@ interface RedisConfig {
 	};
 }
 
+interface BullRedisConfig {
+	redis: {
+		port: number;
+		host: string;
+		db: number;
+		password?: string;
+		tls?: any;
+	};
+}
+
 interface ExtendedRequest extends Request {
 	proxyUrl?: string;
 }
@@ -83,7 +93,19 @@ async function initializeQueues() {
 					return new BullMQAdapter(new BullMQQueue(item, options));
 				}
 
-				return new BullAdapter(new Queue(item, redisConfig));
+				// Bull 4.x requires different Redis config format
+				const bullRedisConfig: BullRedisConfig = {
+					redis: {
+						port: redisConfig.redis.port,
+						host: redisConfig.redis.host,
+						db: redisConfig.redis.db,
+						...(redisConfig.redis.password && {
+							password: redisConfig.redis.password,
+						}),
+						...(redisConfig.redis.tls && { tls: {} }),
+					},
+				};
+				return new BullAdapter(new Queue(item, bullRedisConfig));
 			});
 
 		setQueues(queueList);
