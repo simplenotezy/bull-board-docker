@@ -26,18 +26,12 @@ importers:
       connect-ensure-login:
         specifier: ^0.1.1
         version: 0.1.1
-      dotenv:
-        specifier: ^14.2.0
-        version: 14.3.2
       express:
         specifier: ^4.17.1
         version: 4.21.2
       express-session:
         specifier: ^1.17.2
         version: 1.18.2
-      morgan:
-        specifier: ^1.10.0
-        version: 1.10.1
       passport:
         specifier: ^0.4.1
         version: 0.4.1
@@ -69,6 +63,12 @@ importers:
       '@types/passport-local':
         specifier: ^1.0.35
         version: 1.0.38
+      dotenv:
+        specifier: ^14.2.0
+        version: 14.3.2
+      morgan:
+        specifier: ^1.10.0
+        version: 1.10.1
       ts-node:
         specifier: ^10.9.1
         version: 10.9.2(@types/node@20.19.9)(typescript@5.8.3)

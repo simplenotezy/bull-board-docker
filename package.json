@@ -9,31 +9,30 @@
     "dev": "ts-node src/index.ts --respawn src/index.ts"
   },
   "dependencies": {
-    "@bull-board/api": "^6.10.1",
-    "@bull-board/express": "^6.10.1",
-    "body-parser": "^1.19.0",
-    "bull": "^3.13.0",
-    "bullmq": "^1.8.4",
+    "@bull-board/api": "^6.11.1",
+    "@bull-board/express": "^6.11.1",
+    "body-parser": "^1.20.3",
+    "bull": "^3.29.3",
+    "bullmq": "^1.91.1",
     "connect-ensure-login": "^0.1.1",
-    "dotenv": "^14.2.0",
-    "express": "^4.17.1",
-    "express-session": "^1.17.2",
-    "morgan": "^1.10.0",
+    "express": "^4.21.2",
+    "express-session": "^1.18.2",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "redis": "^5.6.0"
   },
   "devDependencies": {
-    "@types/bull": "^3.15.7",
-    "@types/express": "^4.17.17",
+    "@types/bull": "^3.15.9",
+    "@types/express": "^4.17.23",
     "@types/express-session": "^1.17.7",
     "@types/morgan": "^1.9.4",
-    "@types/node": "^20.5.0",
+    "@types/node": "^20.19.9",
     "@types/passport": "^1.0.12",
     "@types/passport-local": "^1.0.35",
-    "ts-node": "^10.9.1",
+    "dotenv": "^14.3.2",
+    "morgan": "^1.10.1",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.1.6"
+    "typescript": "^5.8.3"
   }
 }
-
