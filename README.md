@@ -13,6 +13,7 @@ This project has been converted to TypeScript with the following features:
 -   **TypeScript**: Full type safety and modern JavaScript features
 -   **pnpm**: Fast, disk space efficient package manager
 -   **Development scripts**: Hot reloading and type checking
+-   **Testing**: Vitest for fast, modern testing
 
 ### Development Commands
 
@@ -28,6 +29,15 @@ pnpm build
 
 # Start production build
 pnpm start
+
+# Run tests
+pnpm test
+
+# Run tests once
+pnpm test:run
+
+# Run tests with UI
+pnpm test:ui
 ```
 
 ### Quick start with Docker
@@ -77,6 +87,36 @@ see "Example with docker-compose" section for example with env parameters
 -   `USER_LOGIN` - login to restrict access to bull-board interface (disabled by default)
 -   `USER_PASSWORD` - password to restrict access to bull-board interface (disabled by default)
 
+#### Bull Board UI Configuration
+
+All Bull Board UI options can be configured via environment variables with the `BULL_BOARD_` prefix. The system uses **dynamic parsing** - no hardcoded mappings required!
+
+**Dynamic Nested Configuration**: Use double underscores (`__`) to create nested objects. The system automatically converts:
+
+-   `BULL_BOARD_UI_CONFIG__BOARD_TITLE` → `uiConfig.boardTitle`
+-   `BULL_BOARD_UI_CONFIG__BOARD_LOGO__PATH` → `uiConfig.boardLogo.path`
+-   `BULL_BOARD_UI_CONFIG__POLLING_INTERVAL__SHOW_SETTING` → `uiConfig.pollingInterval.showSetting`
+-   `BULL_BOARD_UI_CONFIG__LOCALE__LNG` → `uiConfig.locale.lng`
+-   `BULL_BOARD_UI_CONFIG__DATE_FORMATS__SHORT` → `uiConfig.dateFormats.short`
+
+**Automatic Type Conversion**:
+
+-   String numbers → numbers: `"3000"` → `3000`
+-   Boolean strings → booleans: `"true"` → `true`, `"false"` → `false`
+-   Other strings remain as strings: `"My Dashboard"` → `"My Dashboard"`
+
+**Future-Proof**: Works with any new Bull Board configuration options without code changes!
+
+**Common Examples**:
+
+-   `BULL_BOARD_UI_BASE_PATH` - Base path for the UI
+-   `BULL_BOARD_UI_CONFIG__BOARD_TITLE` - Board title
+-   `BULL_BOARD_UI_CONFIG__BOARD_LOGO__PATH` - Logo path
+-   `BULL_BOARD_UI_CONFIG__BOARD_LOGO__WIDTH` - Logo width
+-   `BULL_BOARD_UI_CONFIG__BOARD_LOGO__HEIGHT` - Logo height
+-   `BULL_BOARD_UI_CONFIG__POLLING_INTERVAL__SHOW_SETTING` - Show polling interval setting
+-   `BULL_BOARD_UI_CONFIG__POLLING_INTERVAL__FORCE_INTERVAL` - Force polling interval
+
 ### Restrict access with login and password
 
 To restrict access to bull-board use `USER_LOGIN` and `USER_PASSWORD` env vars.
@@ -109,6 +149,10 @@ services:
       REDIS_PASSWORD: example-password
             REDIS_USE_TLS: "false"
       BULL_PREFIX: bull
+      # Bull Board UI Configuration
+      BULL_BOARD_UI_CONFIG__BOARD_TITLE: "My Queue Dashboard"
+      BULL_BOARD_UI_CONFIG__POLLING_INTERVAL__SHOW_SETTING: "true"
+      BULL_BOARD_UI_CONFIG__POLLING_INTERVAL__FORCE_INTERVAL: "5000"
     depends_on:
       - redis
 

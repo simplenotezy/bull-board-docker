@@ -15,7 +15,16 @@ serverAdapter.setBasePath(config.PROXY_PATH);
 const { setQueues, replaceQueues, addQueue, removeQueue } = createBullBoard({
 	queues: [],
 	serverAdapter,
+	options: config.getBullBoardOptions(),
 });
+
+// Set UI config if provided
+const bullBoardOptions = config.getBullBoardOptions();
+if (bullBoardOptions.uiConfig) {
+	serverAdapter.setUIConfig(bullBoardOptions.uiConfig);
+}
+
+console.log(JSON.stringify(bullBoardOptions, null, 2));
 
 const app = express();
 
@@ -62,3 +71,4 @@ if (config.AUTH_ENABLED) {
 }
 
 export { app, setQueues };
+

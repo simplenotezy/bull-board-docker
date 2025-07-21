@@ -1,4 +1,4 @@
-import { createClient } from "redis";
+import { createClient, RedisClientType } from "redis";
 import config from "./config";
 
 const redisConfig = {
@@ -8,10 +8,11 @@ const redisConfig = {
 	...(config.REDIS_PASSWORD && { password: config.REDIS_PASSWORD }),
 };
 
-const redisClient = createClient(redisConfig);
+const redisClient: RedisClientType = createClient(redisConfig);
 
 redisClient.on("error", (err) => {
 	console.error("Redis Client Error", err);
 });
 
 export default redisClient;
+

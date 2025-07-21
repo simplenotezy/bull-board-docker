@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import type { BoardOptions } from "@bull-board/api/dist/typings/app";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ interface Config {
 	AUTH_ENABLED: boolean;
 	HOME_PAGE: string;
 	LOGIN_PAGE: string;
+	getBullBoardOptions(): BoardOptions;
 }
 
 function normalizePath(pathStr: string | undefined): string {
@@ -47,6 +49,59 @@ function parseRedisUrl(url: string | undefined): RedisConfig | null {
 		console.warn("Invalid REDIS_URL provided:", (err as Error).message);
 		return null;
 	}
+}
+
+function parseBullBoardOptions(): BoardOptions {
+	const options: BoardOptions = {};
+	const prefix = "BULL_BOARD_";
+
+	// Helper function to convert snake_case to camelCase
+	function toCamelCase(str: string): string {
+		return str
+			.toLowerCase()
+			.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
+	}
+
+	// Helper function to convert value to appropriate type
+	function convertValue(value: string): any {
+		if (!isNaN(Number(value)) && value.trim() !== "") {
+			return Number(value);
+		} else if (value.toLowerCase() === "true") {
+			return true;
+		} else if (value.toLowerCase() === "false") {
+			return false;
+		}
+		return value;
+	}
+
+	// Helper function to set nested property dynamically
+	function setNestedProperty(obj: any, path: string, value: any) {
+		const keys = path.split("__").map((key) => toCamelCase(key));
+		let current = obj;
+
+		// Navigate to the parent object
+		for (let i = 0; i < keys.length - 1; i++) {
+			const key = keys[i];
+			if (!current[key] || typeof current[key] !== "object") {
+				current[key] = {};
+			}
+			current = current[key];
+		}
+
+		// Set the final property
+		const lastKey = keys[keys.length - 1];
+		current[lastKey] = value;
+	}
+
+	// Parse all environment variables with BULL_BOARD_ prefix
+	for (const [key, value] of Object.entries(process.env)) {
+		if (key.startsWith(prefix) && value !== undefined) {
+			const optionKey = key.slice(prefix.length);
+			setNestedProperty(options, optionKey, convertValue(value));
+		}
+	}
+
+	return options;
 }
 
 const PROXY_PATH = normalizePath(process.env["PROXY_PATH"]);
@@ -73,6 +128,7 @@ const config: Config = {
 	),
 	HOME_PAGE: PROXY_PATH || "/",
 	LOGIN_PAGE: `${PROXY_PATH}/login`,
+	getBullBoardOptions: parseBullBoardOptions,
 };
 
 export default config;
