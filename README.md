@@ -116,6 +116,9 @@ All Bull Board UI options can be configured via environment variables with the `
 -   `BULL_BOARD_UI_CONFIG__BOARD_LOGO__HEIGHT` - Logo height
 -   `BULL_BOARD_UI_CONFIG__POLLING_INTERVAL__SHOW_SETTING` - Show polling interval setting
 -   `BULL_BOARD_UI_CONFIG__POLLING_INTERVAL__FORCE_INTERVAL` - Force polling interval
+-   `BULL_BOARD_UI_CONFIG__DATE_FORMATS__SHORT` - Date format for same day (e.g., "HH:mm:ss" for 24-hour format)
+-   `BULL_BOARD_UI_CONFIG__DATE_FORMATS__COMMON` - Date format for same year (e.g., "MM-dd HH:mm:ss" for 24-hour format)
+-   `BULL_BOARD_UI_CONFIG__DATE_FORMATS__FULL` - Full date format (e.g., "yyyy-MM-dd HH:mm:ss" for 24-hour format)
 
 ### Restrict access with login and password
 
@@ -153,6 +156,10 @@ services:
       BULL_BOARD_UI_CONFIG__BOARD_TITLE: "My Queue Dashboard"
       BULL_BOARD_UI_CONFIG__POLLING_INTERVAL__SHOW_SETTING: "true"
       BULL_BOARD_UI_CONFIG__POLLING_INTERVAL__FORCE_INTERVAL: "5000"
+      # 24-hour date format configuration
+      BULL_BOARD_UI_CONFIG__DATE_FORMATS__SHORT: "HH:mm:ss"
+      BULL_BOARD_UI_CONFIG__DATE_FORMATS__COMMON: "MM-dd HH:mm:ss"
+      BULL_BOARD_UI_CONFIG__DATE_FORMATS__FULL: "yyyy-MM-dd HH:mm:ss"
     depends_on:
       - redis
 
